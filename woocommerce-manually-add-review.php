@@ -43,5 +43,5 @@ add_action('admin_enqueue_scripts', function () {
 
 function woocommerce_manually_add_review_display()
 {
-    include plugin_dir_path(__FILE__) . 'woocommerce-manually-add-review-display.php';
+    include plugin_dir_path(__FILE__) . 'inc/woocommerce-manually-add-review-display.php';
 }
