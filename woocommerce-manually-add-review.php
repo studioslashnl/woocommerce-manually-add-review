@@ -37,11 +37,8 @@ add_action('admin_menu', function () {
 });
 
 add_action('admin_enqueue_scripts', function () {
-    wp_register_script('custom_wp_admin_js', plugin_dir_url(__FILE__) . 'js/tailwind.js', false, '1.0.0');
-    wp_enqueue_script('custom_wp_admin_js');
-
-    wp_register_script('custom_wp_admin_js_config', plugin_dir_url(__FILE__) . 'js/config.js', false, '1.0.0');
-    wp_enqueue_script('custom_wp_admin_js_config');
+    wp_register_style('custom_wp_admin_css', plugin_dir_url(__FILE__) . 'css/style.css', false, '1.0.0');
+    wp_enqueue_style('custom_wp_admin_css');
 });
 
 function woocommerce_manually_add_review_display()

@@ -1,0 +1,24 @@
+.tw-flex{
+    display: flex;
+}
+
+.tw-flex-col{
+    flex-direction: column;
+}
+
+.tw-gap-1{
+    gap: 0.1em;
+}
+
+.tw-gap-5{
+    gap: 1em;
+}
+
+.tw-text-xs{
+    margin: 0;
+    font-size: .9em;
+}
+
+.tw-text-red-700{
+    color: rgb(161, 2, 2);
+}
