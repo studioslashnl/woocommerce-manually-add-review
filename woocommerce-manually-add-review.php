@@ -1,18 +1,5 @@
 <?php
-
 /**
- * The plugin bootstrap file
- *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
- *
- * @link              https://studioslash.nl
- * @since             1.0.0
- * @package           Woocommerce_Manually_Add_Review
- *
- * @wordpress-plugin
  * Plugin Name:       WooCommerce Manually Add Review
  * Plugin URI:        https://studioslash.nl/plugins/woocommerce-manually-add-review
  * Description:       Adds ad admin page to manually add reviews to WooCommerce products.
@@ -22,61 +9,42 @@
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       woocommerce-manually-add-review
- * Domain Path:       /languages
  */
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+/*  Copyright 2023 Joris W. van Rijn – Studio Slash (email: joris@studioslash.nl)
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License, version 2, as 
+published by the Free Software Foundation.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+add_action('admin_menu', function () {
+    add_submenu_page(
+        'edit.php?post_type=product',
+        'Nieuwe beoordeling',
+        'Nieuwe beoordeling',
+        'manage_options',
+        'add-review',
+        'woocommerce_manually_add_review_display',
+        10
+    );
+});
+
+add_action('admin_enqueue_scripts', function () {
+    wp_register_script('custom_wp_admin_js', plugin_dir_url(__FILE__) . 'js/tailwind.js', false, '1.0.0');
+    wp_enqueue_script('custom_wp_admin_js');
+
+    wp_register_script('custom_wp_admin_js_config', plugin_dir_url(__FILE__) . 'js/config.js', false, '1.0.0');
+    wp_enqueue_script('custom_wp_admin_js_config');
+});
+
+function woocommerce_manually_add_review_display()
+{
+    include plugin_dir_path(__FILE__) . 'woocommerce-manually-add-review-display.php';
 }
-
-/**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
- */
-define( 'WOOCOMMERCE_MANUALLY_ADD_REVIEW_VERSION', '1.0.0' );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-woocommerce-manually-add-review-activator.php
- */
-function activate_woocommerce_manually_add_review() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-manually-add-review-activator.php';
-	Woocommerce_Manually_Add_Review_Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-woocommerce-manually-add-review-deactivator.php
- */
-function deactivate_woocommerce_manually_add_review() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-manually-add-review-deactivator.php';
-	Woocommerce_Manually_Add_Review_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_woocommerce_manually_add_review' );
-register_deactivation_hook( __FILE__, 'deactivate_woocommerce_manually_add_review' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-manually-add-review.php';
-
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
-function run_woocommerce_manually_add_review() {
-
-	$plugin = new Woocommerce_Manually_Add_Review();
-	$plugin->run();
-
-}
-run_woocommerce_manually_add_review();

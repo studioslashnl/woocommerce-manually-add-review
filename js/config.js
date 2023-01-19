@@ -1,0 +1,3 @@
+tailwind.config = {
+    prefix: 'tw-',
+}
